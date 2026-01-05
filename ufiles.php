@@ -138,6 +138,7 @@ include_once 'NavBar.php';
 
         /* Responsive */
         @media (max-width: 600px) {
+
             .file-card img,
             .file-card video {
                 height: 140px;
@@ -167,7 +168,17 @@ include_once 'NavBar.php';
 
             $email = $_SESSION['email'] ?? '';
             if ($email) {
-                $qry = "SELECT * FROM updfiles WHERE email='$email'";
+                // $qry = "SELECT * FROM updfiles WHERE email='$email'";
+                // $result = mysqli_query($link, $qry);
+
+                $type = $_GET['type'] ?? ''; // Get file type from URL (e.g. image, video, pdf, audio)
+
+                if ($type) {
+                    $qry = "SELECT * FROM updfiles WHERE email='$email' AND filetype='$type'";
+                } else {
+                    $qry = "SELECT * FROM updfiles WHERE email='$email'";
+                }
+
                 $result = mysqli_query($link, $qry);
 
                 if (mysqli_num_rows($result) > 0) {
@@ -195,7 +206,7 @@ include_once 'NavBar.php';
                             <div class='file-overlay'>
                                 <button class='file-btn' onclick=\"viewFile('$filepath')\">View</button>
                                 <a href='$filepath' download class='file-btn'>Download</a>
-                                <form method='post' style='display:inline;'>
+                                <form method='post' style='display:inline;' onsubmit='return confirm('Do you really want to delete this file?');'>
                                     <input type='hidden' name='delete_file' value='$filepath'>
                                     <button type='submit' class='file-btn delete'>Delete</button>
                                 </form>
@@ -211,18 +222,26 @@ include_once 'NavBar.php';
                 echo "<p style='text-align:center; color:#ccc;'>Please log in to view your files.</p>";
             }
 
-            // Delete functionality
-            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_file'])) {
-                $deleteFile = $_POST['delete_file'];
-                $delQry = "DELETE FROM updfiles WHERE email='$email' AND filepath='$deleteFile'";
-                mysqli_query($link, $delQry);
+           // Delete functionality
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_file'])) {
+    $deleteFile = $_POST['delete_file'];
 
-                if (file_exists($deleteFile)) {
-                    unlink($deleteFile);
-                }
+    // Delete record from database
+    $delQry = "DELETE FROM updfiles WHERE email='$email' AND filepath='$deleteFile'";
+    mysqli_query($link, $delQry);
 
-                echo "<script>alert('File deleted successfully!'); window.location.href='ufiles.php';</script>";
-            }
+    // Delete physical file
+    if (file_exists($deleteFile)) {
+        unlink($deleteFile);
+    }
+
+    // Redirect to refresh page after deletion
+    $type = $_GET['type'] ?? '';
+    echo "<script>
+        alert('File deleted successfully!');
+        window.location.href = 'ufiles.php?type=' + '$type';
+    </script>";
+}
             ?>
         </div>
     </div>
@@ -255,4 +274,5 @@ include_once 'NavBar.php';
     </script>
 
 </body>
+
 </html>

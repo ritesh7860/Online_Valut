@@ -182,11 +182,11 @@ if (isset($logBtn)) {
       document.getElementById("passError").innerHTML = "";
 
       if (email.trim() === "") {
-        document.getElementById("emailError").innerHTML = "* Enter Email";
+        document.getElementById("emailError").innerHTML = " Enter Email";
         valid = false;
       }
       if (pass.trim() === "") {
-        document.getElementById("passError").innerHTML = "* Enter Password";
+        document.getElementById("passError").innerHTML = " Enter Password";
         valid = false;
       }
 
@@ -202,9 +202,6 @@ if (isset($logBtn)) {
     <img src="login icon.png" alt="Login Icon">
     <h2>Welcome Back</h2>
     <p>Access your FreeSpace account</p>
-
-    <?php if (isset($error)) echo "<div class='error-msg'>$error</div>"; ?>
-
     <form name="frm1" method="post" onsubmit="return validateForm()">
       <div class="mb-3">
         <input type="email" class="form-control" name="umail" placeholder="Email">
@@ -216,11 +213,14 @@ if (isset($logBtn)) {
         <small id="passError" class="text-danger"></small>
       </div>
 
+
+      <?php if (isset($error)) echo "<div class='error-msg'>$error</div>"; ?>
+
       <button type="submit" name="logBtn" class="btn-login">Login</button>
     </form>
 
     <div class="links">
-      <a href="forgot_password.php">Forgot Password?</a><br>
+      <a href="#">Forgot Password?</a><br>
       Don’t have an account? <a href="FreeSpace.php">Sign Up</a>
     </div>
   </div>

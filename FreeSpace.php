@@ -1,6 +1,34 @@
 <?php
 include_once 'NavBar.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+extract($_REQUEST);
+
+if (isset($btn)) {
+  $link = mysqli_connect("localhost", "root", "", "freespace");
+  if (!$link) {
+    die("Database connection failed: " . mysqli_connect_error());
+  }
+
+  // Check if email already exists
+  $check = mysqli_query($link, "SELECT * FROM regdata WHERE email='$mail'");
+  if (mysqli_num_rows($check) > 0) {
+    $error1 = "⚠️ This email is already registered.";
+  } else {
+    $qry = "INSERT INTO regdata (name, email, password) VALUES ('$fnm', '$mail', '$pwd1')";
+    $r = mysqli_query($link, $qry);
+
+    if ($r) {
+      $error = "✅ Your account has been created successfully!";
+    } else {
+      $error1 = "⚠️ Error: Try again later.";
+    }
+  }
+
+  mysqli_close($link);
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -125,9 +153,9 @@ include_once 'NavBar.php';
     }
 
     .error-text {
-      color: #ff7b7b;
-      font-size: 13px;
-      margin-top: 4px;
+      color: #fc8d8dff;
+      font-size: 14px;
+      margin-top: 5px;
     }
 
     .btn-create {
@@ -163,6 +191,23 @@ include_once 'NavBar.php';
       color: #1cb0f6;
       text-decoration: none;
       font-weight: 500;
+    }
+
+    .error-msg {
+      color:limegreen; 
+      font-size:17px;
+      text-align: center;
+      font-weight: 500;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+      .error-msg1 {
+      color:#ffb3b3; 
+      font-size:17px;
+      text-align: center;
+      font-weight: 500;
+      margin-bottom: 10px;
+      margin-top: 10px;
     }
 
     .login-link a:hover {
@@ -213,6 +258,8 @@ include_once 'NavBar.php';
         </div>
 
         <button type="submit" name="btn" class="btn-create">Create Account</button>
+        <?php if (isset($error)) echo "<div class='error-msg'>$error</div>"; ?>
+        <?php if (isset($error1)) echo "<div class='error-msg1'>$error1</div>"; ?>
 
         <div class="login-link">
           Already have an account? <a href="login.php">Login here</a>
@@ -224,26 +271,3 @@ include_once 'NavBar.php';
 </body>
 
 </html>
-
-<?php
-extract($_REQUEST);
-if (isset($btn)) {
-  $link = mysqli_connect("localhost", "root", "", "freespace");
-  if (!$link) {
-    die("Database connection failed: " . mysqli_connect_error());
-  }
-
-  $qry = "INSERT INTO regdata (name, email, password) VALUES ('$fnm', '$mail', '$pwd1')";
-  $r = mysqli_query($link, $qry);
-
-  echo '<div style="position:fixed;bottom:25px;left:50%;transform:translateX(-50%);text-align:center;">';
-  if ($r) {
-    echo '<span style="color:limegreen; font-size:18px;">Your account has been created successfully!</span>';
-  } else {
-    echo '<span style="color:red; font-size:18px;">Error: Try again later.</span>';
-  }
-  echo '</div>';
-
-  mysqli_close($link);
-}
-?>

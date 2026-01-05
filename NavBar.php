@@ -142,11 +142,11 @@ $name = $isLoggedIn ? $_SESSION['name'] ?? 'User' : '';
 
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="FreeSpace.php">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="contact_us.php">Contact Us</a></li>
           <li class="nav-item"><a class="nav-link" href="privacy.php">Privacy</a></li>
           <li class="nav-item"><a class="nav-link" href="Terms.php">Terms & Conditions</a></li>
           <li class="nav-item"><a class="nav-link" href="About.php">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="FreeSpace.php">Registration</a></li>
 
           <?php if ($isLoggedIn): ?>
             <!-- Logged-in user section -->
@@ -157,7 +157,7 @@ $name = $isLoggedIn ? $_SESSION['name'] ?? 'User' : '';
                 <?php echo htmlspecialchars($name); ?>
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                <li><a class="dropdown-item" href="dashboard.php">Profile</a></li>
                 <li><a class="dropdown-item" href="Multimedia.php">Your Space</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="logout.php">Logout</a></li>
@@ -165,7 +165,7 @@ $name = $isLoggedIn ? $_SESSION['name'] ?? 'User' : '';
             </li>
 
             <!-- Mobile version: show as normal nav items -->
-            <li class="nav-item d-lg-none"><a class="nav-link" href="profile.php">Profile</a></li>
+            <li class="nav-item d-lg-none"><a class="nav-link" href="dashboard.php">Profile</a></li>
             <li class="nav-item d-lg-none"><a class="nav-link" href="Multimedia.php">Your Space</a></li>
             <li class="nav-item d-lg-none"><a class="nav-link" href="logout.php">Logout</a></li>
           <?php else: ?>
