@@ -1,5 +1,6 @@
 <?php
 include_once 'NavBar.php';
+require_once "db.php";
 session_start();
 ?>
 <!DOCTYPE html>
@@ -176,10 +177,6 @@ session_start();
       <?php
       extract($_REQUEST);
       if (isset($sub)) {
-        $link = mysqli_connect("localhost", "root", "", "freespace");
-        if (!$link) {
-          die("<span style='color:red;'>Database Connection Failed</span>");
-        }
 
         $tmpPath = $_FILES['filename']['tmp_name'];
         $finalPath = "uploaded data/" . $_FILES['filename']['name'];

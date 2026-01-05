@@ -1,9 +1,8 @@
 <?php
 session_start();
 include_once 'NavBar.php';
+require_once "db.php";
 
-$link = mysqli_connect("localhost", "root", "", "freespace");
-if (!$link) die("Database connection failed!");
 
 $email = $_SESSION['email'] ?? '';
 if (!$email) {

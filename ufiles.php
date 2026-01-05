@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once 'NavBar.php';
+require_once "db.php";
 ?>
 
 <!DOCTYPE html>
@@ -161,10 +162,6 @@ include_once 'NavBar.php';
 
         <div class="file-gallery">
             <?php
-            $link = mysqli_connect("localhost", "root", "", "freespace");
-            if (!$link) {
-                die("Database connection failed: " . mysqli_connect_error());
-            }
 
             $email = $_SESSION['email'] ?? '';
             if ($email) {

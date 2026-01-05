@@ -1,5 +1,6 @@
 <?php
 include_once 'NavBar.php';
+require_once "db.php";
 ?>
 
 <!DOCTYPE html>

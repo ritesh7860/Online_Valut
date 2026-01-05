@@ -1,4 +1,5 @@
 <?php
+require_once "db.php";
 session_start();
 $isLoggedIn = isset($_SESSION['email']);
 $name = $isLoggedIn ? $_SESSION['name'] ?? 'User' : '';

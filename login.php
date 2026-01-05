@@ -1,9 +1,10 @@
 <?php
+require_once "db.php";
 include_once 'NavBar.php';
+
 
 extract($_REQUEST);
 if (isset($logBtn)) {
-  $link = mysqli_connect("localhost", "root", "", "freespace");
   $qry = "SELECT email, name FROM regdata WHERE email='$umail' AND password='$pass'";
   $r = mysqli_query($link, $qry);
   $c = mysqli_num_rows($r);

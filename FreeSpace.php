@@ -1,14 +1,9 @@
 <?php
 include_once 'NavBar.php';
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+require_once "db.php";
 extract($_REQUEST);
 
 if (isset($btn)) {
-  $link = mysqli_connect("localhost", "root", "", "freespace");
-  if (!$link) {
-    die("Database connection failed: " . mysqli_connect_error());
-  }
 
   // Check if email already exists
   $check = mysqli_query($link, "SELECT * FROM regdata WHERE email='$mail'");

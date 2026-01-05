@@ -1,5 +1,6 @@
 <?php
 include_once 'NavBar.php';
+require_once "db.php";
 session_start();
 ?>
 <!DOCTYPE html>
@@ -304,8 +305,6 @@ session_start();
           if (!in_array($ext, $allowed[$fileType])) {
             // echo "<span style='color:red;'>⚠️ Invalid file type for $fileType upload.</span>";
           } else {
-            $link = mysqli_connect("localhost", "root", "", "freespace");
-            if (!$link) die("<span style='color:red;'>DB Connection Failed</span>");
             $tmpPath = $_FILES['filename']['tmp_name'];
             $finalPath = "uploaded data/" . basename($_FILES['filename']['name']);
             $t = $_SESSION['filesize'] ?? 0;
